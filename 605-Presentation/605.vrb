@@ -1,0 +1,14 @@
+\frametitle{Main Objective}
+
+	Below are the fully implemented and extensively tested modules of PUMAS
+
+	\begin{enumerate}
+		\item Document Uploading.
+		\item Document search (with different search criterias i.e. title, authors, department, type)
+		\item Downloading of documents.
+		\item Plagiarism checker
+		\item User Authentication
+
+	\end{enumerate}
+
+\beamerclosesubstitutedenvironement {slidetop}

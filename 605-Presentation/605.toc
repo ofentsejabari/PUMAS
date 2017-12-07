@@ -1,0 +1,10 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Introduction}{2}{0}{1}
+\beamer@sectionintoc {2}{Plagiarism Detection}{3}{0}{2}
+\beamer@sectionintoc {3}{Plagiarism Detection}{4}{0}{3}
+\beamer@sectionintoc {4}{Plagiarism Detection}{5}{0}{4}
+\beamer@sectionintoc {5}{Plagiarism Detection}{6}{0}{5}
+\beamer@sectionintoc {6}{Plagiarism Detection}{7}{0}{6}
+\beamer@sectionintoc {7}{Plagiarism Detection}{8}{0}{7}
+\beamer@sectionintoc {8}{Plagiarism Detection}{9}{0}{8}

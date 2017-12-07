@@ -1,0 +1,201 @@
+
+\documentclass[t]{beamer}
+\usetheme[department=winuk,official=false,theme=blue,titlebgimage=pumas.png,innovation=true]{tue2008}
+\usepackage[english]{babel}
+\usepackage{listings,amsmath}
+\usepackage{minted}
+%\usepackage[utf8]{inputenc}
+
+
+\graphicspath{{images/}}
+
+% Load syntax highlighting for LaTeX programming code in this presentation
+\lstset{language=TeX,
+        basicstyle=\color{black}\ttfamily,
+        commentstyle=\color{gray}\it\ttfamily,
+        keywordstyle=\color{tuered}\bf\ttfamily,
+        showstringspaces=false,
+        frame=single,
+        backgroundcolor=\color{white},
+        moretexcs={usetheme,frametitle,setbeamercovered,setbeameroption,usebackgroundtemplate,movie,logo,note,uncover,chapter,subsection,subsubsection,EUR,EURofc,includegraphics,lstset,color,it,bf,RequirePackage,pause,overlay,frontmatter,backmatter,mainmatter,maketitle,setlength,fancyhf,fancyhead,fancyfoot,lhead,chead,rhead,lfoot,cfoot,rfoot,texteuro,textcelsius,appendix,selectlanguage,part,tableofcontents}
+}
+
+% Define a description list where you can set the width of the widest label
+\newenvironment{descrsf}[1]
+  {\begin{list}{}{\renewcommand{\makelabel}[1]{\textsf{##1}\hfil}
+                  \setlength{\itemsep}{0.5em}
+                  \setlength{\parsep}{0pt}
+                  \settowidth{\labelwidth}{\textsf{#1}}
+                  \setlength{\labelsep}{10pt}
+                  \setlength{\leftmargin}{\labelwidth}
+                  \addtolength{\leftmargin}{\labelsep}
+                  \providecommand{\descriptionlabel}[1]%
+                      {\hspace{\labelsep}\textsf{#1}}
+                 }
+  }
+  {\end{list}}
+
+\title{Publication and Management System (PUMAS) \\ CSI 605}
+\author{Ofentse Jabari, Boipelo Mosetho, Ontiretse Ishmael}
+
+
+ \begin{document}
+
+\begin{titleframe}
+% You can insert additional text for the title frame here if you want
+\end{titleframe}
+
+%\setbeamercovered{transparent=30}
+%\begin{frame}
+%	\frametitle{Outline}
+	%\tableofcontents[pausesections]
+%\end{frame}
+%\setbeamercovered{invisible}
+
+
+
+\section{Introduction}
+\begin{frame}
+	\frametitle{Introduction}
+	
+\end{frame}
+
+
+
+
+
+\section{Plagiarism Detection}
+\begin{slidetop}
+	\frametitle{Main Objective}
+	
+	Below are the fully implemented and extensively tested modules of PUMAS
+	
+	\begin{enumerate}
+		\item Document Uploading.
+		\item Document search (with different search criterias i.e. title, authors, department, type)
+		\item Downloading of documents.
+		\item Plagiarism checker
+		\item User Authentication
+		
+	\end{enumerate}
+
+\end{slidetop}
+
+
+
+
+\section{Plagiarism Detection}
+\begin{frame}
+		\frametitle{Modules/Packages Used}
+		
+		
+		\inputminted[firstline=1, 
+					 lastline=5, 
+		             frame=lines,
+		             fontsize=\footnotesize
+		             ]{python}{../pumas/docxToText.py}
+
+\end{frame}
+
+\section{Plagiarism Detection}
+\begin{frame}
+	\frametitle{Converting document to plain text}
+	
+	
+	\inputminted[firstline=14, 
+	lastline=17, 
+	frame=lines,
+	fontsize=\footnotesize
+	]{python}{../pumas/docxToText.py}
+	
+	(Excluding pictures, tables or any other graphical components.)
+	
+	\inputminted[firstline=19, 
+	lastline=25, 
+	frame=lines,
+	fontsize=\footnotesize
+	]{python}{../pumas/docxToText.py}
+	
+	
+\end{frame}
+
+
+\section{Plagiarism Detection}
+\begin{frame}
+	\frametitle{Converting document to plain text}
+	
+	Example {\tiny (before removing empty lines)}:\\
+	
+	['01. Introduction', ' ', 'this chapter is all about related literature review ...', 'the literature review covers,
+	 the role of music...', ...]
+	 
+	 \inputminted[firstline=27, 
+	 lastline=37, 
+	 frame=lines,
+	 fontsize=\footnotesize
+	 ]{python}{../pumas/docxToText.py}
+	
+	
+\end{frame}
+
+
+
+
+\section{Plagiarism Detection}
+\begin{frame}
+	\frametitle{Creating sentence tokens}
+	
+	Create sentence lexicon of tokenized (and have variant forms of the same word) sentences.
+	
+	\inputminted[firstline=79, 
+	lastline=94, 
+	frame=lines,
+	fontsize=\footnotesize
+	]{python}{../pumas/docxToText.py}	
+	
+\end{frame}
+
+
+
+\section{Plagiarism Detection}
+\begin{frame}
+	\frametitle{Comparing two sentences}
+	
+	sentence = ['chapter', 'related', 'literature', 'review', 'extent', 'music', 'promote', 'social']\\
+	sentence2 = ['music', 'chapter', 'field', 'extend', 'associated', 'literature', '.']\\
+	
+	
+	sentence\_match = [1, 1, 0, 1, 0, 1, 0, 0]
+	
+	\inputminted[firstline=127, 
+	lastline=131, 
+	frame=lines,
+	fontsize=\footnotesize
+	]{python}{../pumas/docxToText.py}
+	
+	sent\_perc\_matches = [45, 10, 0, 1.5, 0, 0, 0, 30]	
+	
+\end{frame}
+
+
+
+\section{Plagiarism Detection}
+\begin{frame}
+	\frametitle{Comparing two sentences}
+	
+	scores = [45, 50, 40, 15, 70, 55, 10, 30]
+	
+	\inputminted[firstline=145, 
+	lastline=151, 
+	frame=lines,
+	fontsize=\footnotesize
+	]{python}{../pumas/docxToText.py}	
+	
+\end{frame}
+
+
+
+
+
+
+\end{document} 

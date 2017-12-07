@@ -1,0 +1,156 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{collections} \PYG{k+kn}{import} \PYG{n}{Counter}
+\PYG{k+kn}{from} \PYG{n+nn}{nltk.corpus} \PYG{k+kn}{import} \PYG{n}{stopwords}
+\PYG{k+kn}{from} \PYG{n+nn}{docx} \PYG{k+kn}{import} \PYG{n}{Document}
+\PYG{k+kn}{from} \PYG{n+nn}{nltk.stem} \PYG{k+kn}{import} \PYG{n}{WordNetLemmatizer}
+\PYG{k+kn}{import} \PYG{n+nn}{nltk.tokenize} \PYG{k+kn}{as} \PYG{n+nn}{tk}
+
+
+
+\PYG{k}{def} \PYG{n+nf}{docx\PYGZus{}to\PYGZus{}text}\PYG{p}{(}\PYG{n}{file\PYGZus{}path}\PYG{p}{):}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} Given a path to a word document,}
+\PYG{l+s+sd}{        Convert it into a list of sentences}
+\PYG{l+s+sd}{        :return: list of sentences \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{document} \PYG{o}{=} \PYG{n}{Document}\PYG{p}{(}\PYG{n}{file\PYGZus{}path}\PYG{p}{)}
+        \PYG{n}{document\PYGZus{}paragraphs} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{for} \PYG{n}{p} \PYG{o+ow}{in} \PYG{n}{document}\PYG{o}{.}\PYG{n}{paragraphs}\PYG{p}{:}
+            \PYG{n}{document\PYGZus{}paragraphs}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{p}\PYG{o}{.}\PYG{n}{text}\PYG{p}{)}
+
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} A list containing a list of sentences \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{n}{sentences\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{n}{tk}\PYG{o}{.}\PYG{n}{sent\PYGZus{}tokenize}\PYG{p}{(}\PYG{n}{s}\PYG{o}{.}\PYG{n}{lower}\PYG{p}{())}
+                          \PYG{k}{for} \PYG{n}{s} \PYG{o+ow}{in} \PYG{n}{document\PYGZus{}paragraphs}\PYG{p}{]}
+
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} Remove empty lists (Empty lines) \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{n}{sentences\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{n}{s} \PYG{k}{for} \PYG{n}{s} \PYG{o+ow}{in} \PYG{n}{sentences\PYGZus{}list}
+                          \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{s}\PYG{p}{)} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{]}
+
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} Convert the list into a list of sentences}
+\PYG{l+s+sd}{        (from a list of list of sentences)\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{n}{new\PYGZus{}list} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{p}{[[}\PYG{n}{new\PYGZus{}list}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{s}\PYG{p}{)} \PYG{k}{for} \PYG{n}{s} \PYG{o+ow}{in} \PYG{n}{l}\PYG{p}{]} \PYG{k}{for} \PYG{n}{l} \PYG{o+ow}{in} \PYG{n}{sentences\PYGZus{}list}\PYG{p}{]}
+
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} Filter out short sentences (e.g. 1.1 purpose of}
+\PYG{l+s+sd}{         the system ). This kind of sentences are normaly}
+\PYG{l+s+sd}{         chapters or heading and don`t have that much impact}
+\PYG{l+s+sd}{         in what we are trying to solve. Strip trailing and}
+\PYG{l+s+sd}{         leading white spaces \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{n}{new\PYGZus{}list} \PYG{o}{=} \PYG{p}{[}\PYG{n}{s}\PYG{o}{.}\PYG{n}{strip}\PYG{p}{()} \PYG{k}{for} \PYG{n}{s} \PYG{o+ow}{in} \PYG{n}{new\PYGZus{}list} \PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{s}\PYG{p}{)}\PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{50}\PYG{p}{]}
+
+        \PYG{k}{return} \PYG{p}{(}\PYG{n}{new\PYGZus{}list}\PYG{p}{)}
+
+
+
+
+
+\PYG{k}{def} \PYG{n+nf}{document\PYGZus{}common\PYGZus{}words}\PYG{p}{(}\PYG{n}{sentence\PYGZus{}lists}\PYG{p}{):}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+sd}{            Identify the most common words in our document}
+\PYG{l+s+sd}{            :return: A list of common words found in sentence\PYGZus{}lists}
+\PYG{l+s+sd}{        \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{n}{lexicon} \PYG{o}{=} \PYG{p}{[]}
+        \PYG{k}{for} \PYG{n}{s} \PYG{o+ow}{in} \PYG{n}{sentence\PYGZus{}lists}\PYG{p}{:}
+            \PYG{n}{all\PYGZus{}words} \PYG{o}{=} \PYG{n}{tk}\PYG{o}{.}\PYG{n}{word\PYGZus{}tokenize}\PYG{p}{(}\PYG{n}{s}\PYG{o}{.}\PYG{n}{lower}\PYG{p}{())}
+            \PYG{n}{lexicon} \PYG{o}{+=} \PYG{n+nb}{list}\PYG{p}{(}\PYG{n}{all\PYGZus{}words}\PYG{p}{)}
+
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} e.g. \PYGZob{}\PYGZsq{}the\PYGZsq{}:3452, \PYGZsq{}was\PYGZsq{}:23415\PYGZcb{} \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{n}{ws\PYGZus{}counts} \PYG{o}{=} \PYG{n}{Counter}\PYG{p}{(}\PYG{n}{lexicon}\PYG{p}{)}
+
+        \PYG{n}{common\PYGZus{}words} \PYG{o}{=} \PYG{p}{[]}
+
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} Remove most common words. e.g. the, is, was, etc\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{k}{for} \PYG{n}{w} \PYG{o+ow}{in} \PYG{n}{ws\PYGZus{}counts}\PYG{p}{:}
+            \PYG{k}{if} \PYG{l+m+mi}{1000} \PYG{o}{\PYGZgt{}} \PYG{n}{ws\PYGZus{}counts}\PYG{p}{[}\PYG{n}{w}\PYG{p}{]} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mi}{50}\PYG{p}{:}
+                \PYG{n}{common\PYGZus{}words}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{w}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{p}{(}\PYG{n}{common\PYGZus{}words}\PYG{p}{)}
+
+
+
+
+
+
+\PYG{k}{def} \PYG{n+nf}{document\PYGZus{}lexicon}\PYG{p}{(}\PYG{n}{sentence\PYGZus{}lists}\PYG{p}{):}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+sd}{            Create sentence lexicon of our document. Tokenize sentences, remove}
+\PYG{l+s+sd}{            common words (stop words) and lemmatize words.}
+\PYG{l+s+sd}{            :return: A list of lemmatized tokens for each sentence.}
+\PYG{l+s+sd}{        \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{common\PYGZus{}words} \PYG{o}{=} \PYG{n}{document\PYGZus{}common\PYGZus{}words}\PYG{p}{(}\PYG{n}{sentence\PYGZus{}lists}\PYG{p}{)}
+        \PYG{n}{stop\PYGZus{}words} \PYG{o}{=} \PYG{n}{stopwords}\PYG{o}{.}\PYG{n}{words}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}english\PYGZsq{}}\PYG{p}{)}
+        \PYG{n}{sentence\PYGZus{}lexicon} \PYG{o}{=} \PYG{p}{[]}
+
+        \PYG{k}{for} \PYG{n}{sentences} \PYG{o+ow}{in} \PYG{n}{sentence\PYGZus{}lists}\PYG{p}{:}
+            \PYG{n}{lexicon} \PYG{o}{=} \PYG{n}{tk}\PYG{o}{.}\PYG{n}{word\PYGZus{}tokenize}\PYG{p}{(}\PYG{n}{sentences}\PYG{o}{.}\PYG{n}{lower}\PYG{p}{())}
+            \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} Remove common words \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+            \PYG{n}{lexicon} \PYG{o}{=} \PYG{p}{[}\PYG{n}{word} \PYG{k}{for} \PYG{n}{word} \PYG{o+ow}{in} \PYG{n}{lexicon}
+                            \PYG{k}{if} \PYG{n}{word} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{common\PYGZus{}words}\PYG{p}{]}
+            \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} Remove stop words \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+            \PYG{n}{lexicon} \PYG{o}{=} \PYG{p}{[}\PYG{n}{word} \PYG{k}{for} \PYG{n}{word} \PYG{o+ow}{in} \PYG{n}{lexicon}
+                            \PYG{k}{if} \PYG{n}{word} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{stop\PYGZus{}words}\PYG{p}{]}
+            \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} Lemmatize \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+            \PYG{n}{lemmatizer} \PYG{o}{=} \PYG{n}{WordNetLemmatizer}\PYG{p}{()}
+            \PYG{n}{lexicon} \PYG{o}{=} \PYG{p}{[}\PYG{n}{lemmatizer}\PYG{o}{.}\PYG{n}{lemmatize}\PYG{p}{(}\PYG{n}{word}\PYG{p}{)}
+                            \PYG{k}{for} \PYG{n}{word} \PYG{o+ow}{in} \PYG{n}{lexicon}\PYG{p}{]}
+            \PYG{n}{sentence\PYGZus{}lexicon}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{lexicon}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{n}{sentence\PYGZus{}lexicon}
+
+
+
+\PYG{k}{def} \PYG{n+nf}{sentence\PYGZus{}similarity}\PYG{p}{(}\PYG{n}{doc\PYGZus{}sent\PYGZus{}lex}\PYG{p}{,} \PYG{n}{new\PYGZus{}sentence}\PYG{p}{):}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+sd}{        :param document\PYGZus{}sentences:}
+\PYG{l+s+sd}{        :param new\PYGZus{}sentence:}
+\PYG{l+s+sd}{        :return:}
+\PYG{l+s+sd}{        \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+        \PYG{n}{stop\PYGZus{}words} \PYG{o}{=} \PYG{n}{stopwords}\PYG{o}{.}\PYG{n}{words}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}english\PYGZsq{}}\PYG{p}{)}
+        \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} remove stop words \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+        \PYG{n}{new\PYGZus{}sentence} \PYG{o}{=} \PYG{p}{[}\PYG{n}{word} \PYG{k}{for} \PYG{n}{word} \PYG{o+ow}{in} \PYG{n}{new\PYGZus{}sentence} \PYG{k}{if} \PYG{n}{word} \PYG{o+ow}{not} \PYG{o+ow}{in} \PYG{n}{stop\PYGZus{}words}\PYG{p}{]}
+
+        \PYG{n}{sentence\PYGZus{}match} \PYG{o}{=} \PYG{p}{[}\PYG{l+m+mi}{0} \PYG{k}{for} \PYG{n}{\PYGZus{}} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{new\PYGZus{}sentence}\PYG{p}{),} \PYG{l+m+mi}{1}\PYG{p}{)]}
+
+        \PYG{n}{sent\PYGZus{}perc\PYGZus{}matches} \PYG{o}{=} \PYG{p}{[]}
+
+        \PYG{k}{for} \PYG{n}{sentence} \PYG{o+ow}{in} \PYG{n}{doc\PYGZus{}sent\PYGZus{}lex}\PYG{p}{:}
+            \PYG{n}{index} \PYG{o}{=} \PYG{l+m+mi}{0}
+            \PYG{k}{for} \PYG{n}{word} \PYG{o+ow}{in} \PYG{n}{new\PYGZus{}sentence}\PYG{p}{:}
+                \PYG{c+c1}{\PYGZsh{} record a match}
+                \PYG{k}{if} \PYG{n}{word} \PYG{o+ow}{in} \PYG{n}{sentence}\PYG{p}{:}
+                   \PYG{n}{sentence\PYGZus{}match}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{1}
+
+                \PYG{k}{else}\PYG{p}{:}
+                    \PYG{n}{sentence\PYGZus{}match}\PYG{p}{[}\PYG{n}{index}\PYG{p}{]} \PYG{o}{=} \PYG{l+m+mi}{0}
+                \PYG{n}{index}\PYG{o}{+=}\PYG{l+m+mi}{1}
+
+            \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{} count number of 1`s in score\PYGZus{}vector \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+            \PYG{n}{score} \PYG{o}{=} \PYG{p}{(}\PYG{n}{sentence\PYGZus{}match}\PYG{o}{.}\PYG{n}{count}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{sentence}\PYG{p}{))}\PYG{o}{*}\PYG{l+m+mi}{100}
+            \PYG{n}{sent\PYGZus{}perc\PYGZus{}matches}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{score}\PYG{p}{)}
+
+        \PYG{k}{return} \PYG{p}{(}\PYG{n+nb}{max}\PYG{p}{(}\PYG{n}{sent\PYGZus{}perc\PYGZus{}matches}\PYG{p}{))}
+
+
+
+
+
+\PYG{k}{def} \PYG{n+nf}{compare\PYGZus{}documents}\PYG{p}{(}\PYG{n}{existing\PYGZus{}document\PYGZus{}lexicon}\PYG{p}{,} \PYG{n}{new\PYGZus{}document\PYGZus{}lexicon}\PYG{p}{):}
+    \PYG{l+s+sd}{\PYGZsq{}\PYGZsq{}\PYGZsq{}}
+\PYG{l+s+sd}{        Compare two documents lexicons lists}
+\PYG{l+s+sd}{        :param existing\PYGZus{}document\PYGZus{}lexicon:}
+\PYG{l+s+sd}{        :param new\PYGZus{}document\PYGZus{}lexicon:}
+\PYG{l+s+sd}{        :return:}
+\PYG{l+s+sd}{    \PYGZsq{}\PYGZsq{}\PYGZsq{}}
+
+    \PYG{n}{scores} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{k}{for} \PYG{n}{sentence} \PYG{o+ow}{in} \PYG{n}{new\PYGZus{}document\PYGZus{}lexicon}\PYG{p}{:}
+        \PYG{n}{sc} \PYG{o}{=} \PYG{n}{sentence\PYGZus{}similarity}\PYG{p}{(}\PYG{n}{existing\PYGZus{}document\PYGZus{}lexicon}\PYG{p}{,}
+                                 \PYG{n}{sentence}\PYG{p}{)}
+        \PYG{n}{scores}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{sc}\PYG{p}{)}
+
+    \PYG{k}{return} \PYG{n+nb}{float}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}.1g}\PYG{l+s+s1}{\PYGZsq{}} \PYG{o}{\PYGZpc{}} \PYG{p}{(}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{scores}\PYG{p}{)}\PYG{o}{/}\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{scores}\PYG{p}{)))}
+
+
+\PYG{c+c1}{\PYGZsh{} docx\PYGZus{}to\PYGZus{}text(\PYGZdq{}C:/Users/ofentse/Documents/CSMSC/CSI 605 \PYGZhy{}2017/PROJECT\PYGZhy{}01/media/uploads/2017/System\PYGZus{}Design\PYGZus{}CMNhajV.docx\PYGZdq{})}
+\end{Verbatim}
