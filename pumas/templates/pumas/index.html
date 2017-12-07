@@ -1,0 +1,54 @@
+{%  extends "pumas/base.html"%}
+{%  block title %} Pumas {%  endblock %}
+
+{% load static %}
+
+{%  block body %}
+
+
+<section class="engine"><a href="{% url 'pumas:index' %}">web page software</a></section>
+<section class="header3 cid-qBcgRvkrQt mbr-parallax-background" id="header3-k" data-rv-view="471">
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="mbr-figure" style="width: 100%;">
+                <img src="{% static 'pumas/assets/images/01-1-1000x400.jpg' %}" alt="pumas" title="" media-simple="true">
+            </div>
+
+            <div class="media-content">
+                <h1 class="mbr-section-title mbr-white pb-3 mbr-fonts-style display-1">
+                    PUMAS Documents Archive</h1>
+
+                <div class="mbr-section-text mbr-white pb-3 ">
+                    <p class="mbr-text mbr-fonts-style display-5">
+                        A central repository for research outputs, PhD, Mphil/MSC thesis and
+                        dessertation and BSc project document.
+                    </p>
+                </div>
+
+                <div class="mbr-section-btn">
+                    <a class="btn btn-md btn-secondary display-4" href="{% url 'pumas:search' %}">
+                      Search Repository</a>
+                    <!--<a class="btn btn-md btn-white-outline display-4" href="{% url 'pumas:index' %}">-->
+                      <!--Some Example</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section class="mbr-section article content9 cid-qBcQ6H59ky" id="content9-z" data-rv-view="474">
+
+    <div class="container">
+        <div class="inner-container" style="width: 100%;">
+            <hr class="line" style="width: 25%;">
+            <div class="section-text align-center mbr-fonts-style display-5">
+                    Some information about the application</div>
+            <hr class="line" style="width: 25%;">
+        </div>
+        </div>
+</section>
+
+
+{%  endblock %}

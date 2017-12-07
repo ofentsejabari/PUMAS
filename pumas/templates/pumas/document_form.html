@@ -1,0 +1,60 @@
+{% extends "pumas/base.html"%}
+<!--{% load crispy_forms_tags %}-->
+{%  block title %} Add Document {%  endblock %}
+
+{%  block body %}
+
+<section class=" cid-qBcUEJUhLt" id="progress-bars2-15" data-rv-view="529">
+
+    <div class="container"  >
+        <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-1"
+            style="padding-bottom:0 !important"> Add/Update and/ check plagiarism</h2>
+
+        <div class="row pt-5 mt-5" style="margin-top:0 !important">
+            <div class="col-md-2 "> </div>
+
+            <div class=" col-md-8" style="margin-top:0 !important">
+                <section class="mbr-section article content1 "
+                         id="content1-t" data-rv-view="260">
+
+                    <div class="container">
+                        <!--<div class="media-container-row">-->
+                            <!--<div class="mbr-text col-12 col-md-8 mbr-fonts-style display-7">-->
+
+                                <form class="form-horizontal w3-padding" action="" method="post"
+                                      enctype="multipart/form-data">
+
+                                    {% csrf_token %}
+                                    {{ form | crispy }}
+                                    <!--{% include 'pumas/form-template.html' %}-->
+
+                                    <div class="mbr-section-btn">
+                                        <button type="submit" class="btn btn-round-sm btn-sm btn-secondary display-4">
+                                            Update</button>
+                                    </div>
+                                </form>
+
+                                <!--<form method="post" enctype="multipart/form-data">-->
+                                    <!--{% csrf_token %}-->
+                                    <!--{{ form.as_p }}-->
+                                    <!--<button type="submit">Upload</button>-->
+                                <!--</form>-->
+
+                                <!--<p><a href="">Return to home</a></p>-->
+
+                            <!--</div>-->
+                        <!--</div>-->
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="col-md-2 "> </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+{%  endblock %}

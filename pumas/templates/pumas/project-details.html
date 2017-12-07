@@ -1,0 +1,194 @@
+{%  extends "pumas/base.html"%}
+{%  block title %} Detailed {%  endblock %}
+{% load static %}
+
+{%  block body %}
+
+<section class="progress-bars2 cid-qBcUEJUhLt  cid-qBcjCWm6UL"
+         id="progress-bars2-1l" data-rv-view="3618">
+
+    <div class="container">
+        <h2 class="mbr-section-title align-center pb-3 mbr-fonts-style display-1">
+			{{document.title}}
+		</h2>
+
+
+        <div class="row pt-5 mt-5">
+            <div class="col-md-6 text-elements">
+                <h4 class="section-content-title pb-3 align-left mbr-fonts-style display-6">
+                    Abstract&nbsp;</h4>
+                <p class="section-content-text align-left mbr-fonts-style display-7">
+                    {{document.abstract}}
+                </p>
+            </div>
+
+
+            <div class="progress_elements col-md-6">
+                <div class="progress1 pb-1">
+                    <div class="title-wrap">
+                        <div class="progressbar-title mbr-fonts-style display-7">
+                            <p>
+                                <strong> Athour(s):</strong>
+                            </p>
+                        </div>
+
+                        <div class="mbr-fonts-style display-7">
+							<span>{{document.authors}}</span>
+                        </div>
+                    </div>
+                </div>
+
+				<div class="progress1 pb-1">
+                    <div class="title-wrap">
+                        <div class="progressbar-title mbr-fonts-style display-7">
+                            <p>
+                                <strong> Created By:</strong>
+                            </p>
+                        </div>
+
+                        <div class="mbr-fonts-style display-7">
+							<span>{{document.created_by}}</span>
+                        </div>
+                    </div>
+                </div>
+
+				<!--<hr class="line pb-0" style="width: 100%;">-->
+				<!--department-->
+				<div class="progress1 pb-1">
+                    <div class="title-wrap">
+                        <div class="progressbar-title mbr-fonts-style display-7">
+                            <p>
+                                <strong> Faculty:</strong>
+                            </p>
+                        </div>
+
+                        <div class="mbr-fonts-style display-7">
+							<span>{{document.faculty}}</span>
+                        </div>
+                    </div>
+                </div>
+
+				<div class="progress1 pb-1">
+                    <div class="title-wrap">
+                        <div class="progressbar-title mbr-fonts-style display-7">
+                            <p>
+                                <strong> Department:</strong>
+                            </p>
+                        </div>
+
+                        <div class="mbr-fonts-style display-7">
+							<span>{{document.department}}</span>
+                        </div>
+                    </div>
+                </div>
+
+				<div class="progress1 pb-1">
+                    <div class="title-wrap">
+                        <div class="progressbar-title mbr-fonts-style display-7">
+                            <p>
+                                <strong> Type:</strong>
+                            </p>
+                        </div>
+
+                        <div class="mbr-fonts-style display-7">
+							<span>{{document.type}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress1 pb-1">
+                    <div class="title-wrap">
+                        <div class="progressbar-title mbr-fonts-style display-7">
+                            <p>
+                                <strong> Created:</strong>
+                            </p>
+                        </div>
+
+                        <div class="mbr-fonts-style display-7">
+							<span>{{document.created}}</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="progress1 pb-1">
+                    <div class="title-wrap">
+                        <div class="progressbar-title mbr-fonts-style display-7">
+                            <p>
+                                <strong> Last Update:</strong>
+                            </p>
+                        </div>
+
+                        <div class="mbr-fonts-style display-7">
+							<span>{{document.updated}}</span>
+                        </div>
+                    </div>
+                </div>
+
+
+				<!--plagiarism level-->
+                <div class="progress3 pb-5">
+
+                    <div class="title-wrap">
+                        <div class="progressbar-title mbr-fonts-style display-7">
+                            <p>
+                                <strong>Plagiarism Level:</strong>
+                            </p>
+                        </div>
+
+						<div class="mbr-fonts-style display-7">
+							<span>{{ document.plagiarism_level }} %</span>
+						</div>
+
+                    </div>
+
+                    {% if document.plagiarism_level > 35 %}
+                        <progress class="progress progress-success" style="background-color: 'red'"
+                                  max="100" value="{{ document.plagiarism_level }}"></progress>
+
+                    {% else %}
+                        <progress class="progress progress-warning" style="background-color: 'green'"
+                                  max="100" value="{{ document.plagiarism_level }}"></progress>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section content8 cid-qBcMRer9yM" id="content8-r" data-rv-view="775">
+
+    <div class="container">
+        <div class="media-container-row title">
+            <div class="col-12 col-md-8">
+                <div class="mbr-section-btn align-center">
+
+                    {% if document.status == 'approved' %}
+					    <a class="btn btn-secondary display-7"  href="{{ document.attachment.url }}">
+                            <i class="fa fa-cloud-download text-white" aria-hidden="true"
+                                                      style="font-size:1.4em"></i> &nbsp; Download</a>
+                    {% endif %}
+
+                    {% if document.status != 'approved' %}
+                        {% if document.status != 'rejected' %}
+                            <a class="btn btn-warning display-7"
+                                href="{% url 'pumas:project-update' document.id %}">
+                                <i class="fa fa-warning text-warning" aria-hidden="true"
+                                                      style="font-size:1.4em"></i>Update Document</a>
+
+                            <!--<a class="btn btn-success-outline display-7"-->
+                                <!--href="{% url 'pumas:project-update' document.id %}">Run Plagiarism Checker</a>-->
+                        {% endif %}
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{%  endblock %}

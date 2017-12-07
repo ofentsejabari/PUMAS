@@ -1,0 +1,189 @@
+{% extends "pumas/base.html"%}
+{% block title %} Projects {%  endblock %}
+{% load static %}
+
+{% block body %}
+
+<section class="mbr-section info2 cid-qBcZxvHfVo" id="info2-19" data-rv-view="503">
+
+    <div class="container">
+        <div class="row main justify-content-center">
+            <div class="media-container-column col-12 col-lg-3 col-md-4">
+
+                <div class="mbr-section-btn align-left py-3">
+
+                        <!--<h1 class="mbr-section-title mbr-white pb-3 mbr-fonts-style display-5">-->
+                            <!--PUMAS Documents Archive</h1>-->
+
+                    <!--<a class="btn btn-sm btn-success display-3" href="{% url 'pumas:project-add' %}">-->
+                        <!--&lt;!&ndash;<span class="mbri-upload mbr-iconfont mbr-iconfont-btn"></span>&ndash;&gt;-->
+                        <!--Upload Document</a>-->
+
+                    <!--<a class="btn btn-sm btn-warning-outline display-3" href="{% url 'pumas:project-add' %}">-->
+                        <!--&lt;!&ndash;<span class="mbri-upload mbr-iconfont mbr-iconfont-btn"></span>&ndash;&gt;-->
+                        <!--Check Plagiarism</a>-->
+                </div>
+
+            </div>
+            <div class="media-container-column title col-12 col-lg-7 col-md-6"></div>
+        </div>
+    </div>
+</section>
+
+
+<section class="features16 cid-qBcW0HcjCe" id="features16-17" data-rv-view="508">
+
+    <div class="container align-center">
+
+        <div class="row media-row">
+
+
+            <!--A list of all your projects-->
+            <div class="team-item col-lg-12 col-md-6">
+
+                {% if all_documents %}
+
+                    <section class="section-table cid-qBghNVSoK8" id="table1-1b" data-rv-view="457">
+
+                          <div class="container container-table">
+
+                              <div class="table-wrapper">
+                                    <div class="container">
+                                          <div class="row search">
+                                                <!--<div class="col-md-6"></div>-->
+                                                <div class="col-md-6">
+                                                    <div class="dataTables_filter">
+                                                      <label class="searchInfo mbr-fonts-style display-7">Search:</label>
+                                                      <input class="form-control input-sm" disabled="">
+                                                    </div>
+                                                </div>
+                                          </div>
+                                    </div>
+
+                                     <div class="container scroll">
+                                  <table class="table isSearch" cellspacing="0" id="dataTables">
+                                      <thead>
+                                            <tr class="table-heads ">
+
+                                                <th class="head-item mbr-fonts-style display-7">
+                                                </th>
+
+                                                <th class="head-item mbr-fonts-style display-7">
+                                                  Title</th>
+                                                <th class="head-item mbr-fonts-style display-7">
+                                                  Type</th>
+
+                                                <th class="head-item mbr-fonts-style display-7">
+                                                  Department
+                                                </th>
+
+                                                <th class="head-item mbr-fonts-style display-7">
+                                                  Created </th>
+
+                                                <th class="head-item mbr-fonts-style display-7">
+                                                  Updated </th>
+
+
+                                                <th class="head-item mbr-fonts-style display-7">
+                                                  Status </th>
+                                            </tr>
+
+                                      </thead>
+
+                                        <tbody>
+                                           {% for doc in all_documents %}
+
+                                           <tr>
+                                              {% if doc.status == 'approved' %}
+                                                  <td>
+                                                      <i class="fa fa-check-square-o text-success" aria-hidden="true"
+                                                      style="font-size:1.4em"></i>
+                                                  </td>
+
+                                              {% else %}
+                                                  <td>
+                                                      <i class="fa fa-warning text-warning" aria-hidden="true"
+                                                      style="font-size:1.4em"></i>
+                                                  </td>
+                                              {% endif %}
+
+
+
+                                              {% if doc.status == 'approved' %}
+                                                  <td><a  href="{% url 'pumas:project-details' doc.id %}">
+                                                      {{ doc.title }}</a>
+                                                  </td>
+
+                                              {% else %}
+                                                  <td><a  href="{% url 'pumas:project-details' doc.id %}">
+                                                      {{ doc.title }}</a></td>
+                                              {% endif %}
+
+
+                                              <td>{{ doc.type }}</td>
+                                              <td>{{ doc.department }}</td>
+                                              <td>{{ doc.created }}</td>
+                                              <td>{{ doc.updated }}</td>
+
+                                              {% if doc.status == 'approved' %}
+                                                 <td>
+                                                   {{ doc.status }}
+                                                 </td>
+                                              {% else %}
+                                                 <td>
+
+                                                   {{ doc.status }}
+                                                 </td>
+                                              {% endif %}
+
+                                           </tr>
+
+                                           {% endfor %}
+
+
+                                        </tbody>
+
+                                  </table>
+                            </div>
+
+                                    <div class="container table-info-container">
+                                          <div class="row info">
+                                                <div class="col-md-6">
+                                                      <div class="dataTables_info mbr-fonts-style display-7">
+                                                            <span class="infoBefore">Showing</span>
+                                                            <span class="inactive infoRows"></span>
+                                                            <span class="infoAfter">entries</span>
+                                                            <span class="infoFilteredBefore">(filtered from</span>
+                                                            <span class="inactive infoRows"></span>
+                                                            <span class="infoFilteredAfter"> total entries)</span>
+                                                      </div>
+                                                </div>
+                                                <div class="col-md-6"></div>
+                                          </div>
+                                    </div>
+                              </div>
+
+                          </div>
+
+                    </section>
+
+                {% else %}
+
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+
+
+<!--<script type="text/javascript">-->
+
+      <!--$("#dataTables").DataTable();-->
+
+<!--</script>-->
+
+{%  endblock %}
+

@@ -1,0 +1,71 @@
+{%  extends "pumas/base.html"%}
+{%  block title %} Login {%  endblock %}
+{% load static %}
+
+{%  block body %}
+
+
+
+<style>
+form {
+    border: 3px solid #f1f1f1;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+
+.container {
+    padding: 20px;
+    border-color:#46d6d1;
+    border-width:1px;
+}
+
+</style>
+
+<section>
+
+    <div class="container" style="margin-top:70px">
+        <div class="row">
+            <div class="card p-3 col-12 col-md-6">
+                <div class="card-wrapper">
+
+                    <div class="card-box">
+
+                        <div class="container" style="">
+                            <h2 class="display-1">PUMAS LOGIN</h2>
+                        </div>
+
+                        <form method="post" action="{% url 'login' %}">
+                            <p class="mbr-text mbr-fonts-style display-7">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                            </p>
+
+                            <div class="mbr-section-btn text-center">
+                                <button type="submit"  class="btn btn-primary display-4">
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="container">
+                            <span class="psw">Forgot <a href="#">password?</a></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+{%  endblock %}

@@ -1,0 +1,66 @@
+{%  extends "pumas/base.html"%}
+{%  block title %} Search Results {%  endblock %}
+
+{% load static %}
+
+{%  block body %}
+
+<section class="mbr-section article content9 cid-qBcTqBZdWU" id="content9-14" data-rv-view="500">
+
+    <div class="container">
+        <div class="inner-container" style="width: 100%; margin-top:60px; align:center">
+            <hr class="line" style="width: 50%;">
+            <div class="section-text align-center mbr-fonts-style display-5" style="padding: 15px !important">
+                    {{ total }} document(s) found from <Strong>'{{ search_query }}'</Strong>
+
+            </div>
+            {{ now }}
+            <hr class="line" style="width: 100%;">
+        </div>
+        </div>
+</section>
+
+<section class="mbr-section article content11 cid-qBcSv0ezX2" id="content11-12" data-rv-view="502">
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="mbr-text counter-container col-12 col-md-8 mbr-fonts-style display-7">
+                <ol>
+                    {% if filter_documents %}
+                        {% for document in results %}
+                            {% if document.status == 'approved' %}
+                            <li><strong>{{document.title}}</strong> -
+                                {{document.abstract}}
+                                <div>
+                                    <a href="{{ document.attachment.url }}" style="font-size: 0.9rem; background-color: rgb(255, 255, 255);" class="text-primary">
+                                        <i class="fa fa-download text-success" aria-hidden="true" style="font-size:1.4em"></i>
+                                        &nbsp;&nbsp;Download &emsp;</a>
+
+                                    <a href="{% url 'pumas:project-details' document.id %}"
+                                       style="font-size: 0.9rem; background-color: rgb(255, 255, 255);"
+                                       class="text-primary">
+                                        &nbsp;&nbsp;View Details&emsp;</a>
+
+                                </div>
+                            </li>
+
+                            {% else %}
+                                <li><strong>{{document.title}}</strong> -
+                                {{document.abstract}}
+                                <div>
+                                    <a href="" style="font-size: 0.9rem; background-color: rgb(255, 255, 255);" class="text-primary">
+                                        <i class="fa fa-lock text-warning " aria-hidden="true" style="font-size:1.4em"></i>
+                                        &nbsp;Unavailable</a>
+                                </div>
+                            </li>
+                            {% endif %}
+
+                        {% endfor %}
+                    {% endif %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+{%  endblock %}

@@ -1,0 +1,88 @@
+{%  extends "pumas/base.html"%}
+{%  block title %} Search Repository {%  endblock %}
+
+{% load static %}
+
+{%  block body %}
+
+
+<section class="cid-qBcQF2T0Yi mbr-fullscreen mbr-parallax-background" id="header15-1s" data-rv-view="3631">
+
+    <div class="mbr-overlay" style="opacity: 0.1; background-color: rgb(204, 204, 204);"></div>
+
+	<div class="container">
+
+		<div class="row display-5" style="align:center">
+			<p> Search the PUMAS data repository for <strong>BSc projects</strong>,
+				<strong>thesis and dessertation</strong>, research results
+				and other publications</p>
+		</div>
+
+	  	<form class="mbr-form" action="{% url 'pumas:results' %}" method='get'
+			  data-form-title="">
+
+			{% csrf_token %}
+
+			<!--title-->
+		  	<div class="form-check form-check-inline">
+				  <label class="form-check-label display-5">
+						<input class="form-check-input" type="checkbox" checked="checked" name="filter[]" value="title">
+						  	Title
+				  </label>
+			</div>
+
+			<!--created_by-->
+			<div class="form-check form-check-inline">
+				  <label class="form-check-label display-5">
+						<input class="form-check-input" type="checkbox" name="filter[]" value="created_by">
+						  	Created by
+				  </label>
+			</div>
+
+			<!--author-->
+			<div class="form-check form-check-inline">
+				  <label class="form-check-label display-5">
+						<input class="form-check-input" type="checkbox" name="filter[]" value="authors">
+						  	Author(s)
+				  </label>
+			</div>
+
+			<!--department-->
+			<div class="form-check form-check-inline">
+				  <label class="form-check-label display-5">
+						<input class="form-check-input" type="checkbox" name="filter[]" value="department">
+						  	Department
+				  </label>
+			</div>
+
+			<!--Type-->
+			<div class="form-check form-check-inline">
+				  <label class="form-check-label display-5">
+						<input class="form-check-input" type="checkbox" name="filter[]" value="type">
+						  	Type
+				  </label>
+			</div>
+
+			<div class="row">
+				  <div class="col-sm-9">
+						<input  class="form-control" name="query" required="required" placeholder="Search Repository">
+				  </div>
+
+				  <div class="col-sm-3">
+					  	<button type="submit" class="btn btn-sm btn-warning mbri-search mbr-iconfont mbr-iconfont-btn"> &ensp; Search</button>
+				  </div>
+			</div>
+
+	  	</form>
+
+	</div>
+
+    <div class="mbr-arrow hidden-sm-down" aria-hidden="true">
+        <a href="#next">
+            <i class="mbri-down mbr-iconfont"></i>
+        </a>
+    </div>
+</section>
+
+
+{%  endblock %}
